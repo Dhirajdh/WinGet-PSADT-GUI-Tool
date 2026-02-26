@@ -82,3 +82,49 @@ Details: `THIRD_PARTY_NOTICES.md`.
 ## Prerequisite Placement
 See docs/prerequisites.md for exact folder-by-folder setup before first run.
 
+
+## Product Overview
+**WinGet-PSADT GUI Packaging Tool** is built for IT professionals who need repeatable, low-friction Win32 app packaging.
+
+It provides a single operational surface for:
+- application discovery from WinGet
+- PSAppDeployToolkit-based packaging
+- configure-by-phase script authoring
+- `.intunewin` generation
+- Intune upload workflows
+
+## PSADT Function Categories in UI
+The Configure panel organizes PSADT functions into practical categories to improve discoverability and reduce scripting errors:
+- User Interface
+- Registry
+- File System
+- Shortcuts
+- Services
+- User Context / Profiles
+- Environment / System
+- Configuration / INI
+- Logging
+- Security / Permissions
+- Application Detection / Management
+- Browser Extensions
+- Process Execution
+- MSI / MSP / MST
+- Core Toolkit Engine
+
+## Screenshots
+> Add screenshots to `assets/screenshots/` using filenames in `assets/screenshots/README.md`.
+
+### Search Results
+![Search Results](assets/screenshots/01-search-results.png)
+
+### Package Information
+![Package Information](assets/screenshots/02-package-info.png)
+
+### Configure Panel
+![Configure Panel](assets/screenshots/03-configure-panel.png)
+
+### PSADT Function Categories
+![PSADT Function Categories](assets/screenshots/04-function-categories.png)
+
+### Generate and Upload
+![Generate and Upload](assets/screenshots/05-generate-upload.png)
