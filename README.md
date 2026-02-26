@@ -46,6 +46,9 @@ powershell.exe -ExecutionPolicy Bypass -File .\WinGet-PSADT-GUI.ps1
 - Windows PowerShell 5.1
 - WinGet
 - PSAppDeployToolkit.Tools: https://github.com/PSAppDeployToolkit/PSAppDeployToolkit.Tools
+```Installing The Module
+Install-Module PSAppDeployToolkit.Tools -Scope CurrentUser
+```
 - Microsoft Win32 Content Prep Tool: https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool
 
 ## Prerequisite Placement
