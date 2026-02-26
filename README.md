@@ -1,6 +1,18 @@
 # WinGet-PSADT-GUI-Tool
 
 This repository contains the modularized WinGet + PSADT GUI packaging tool.
+**WinGet-PSADT-GUI-Tool** is a Windows PowerShell WPF application that streamlines Win32 app packaging and Intune deployment for IT admins.
+
+It lets you:
+- Search apps with WinGet
+- Download installers and scaffold a PSAppDeployToolkit (PSADT) package
+- Configure install/uninstall/repair logic through a GUI (including categorized PSADT functions and parameters)
+- Generate `.intunewin` packages
+- Upload directly to Intune with Microsoft Graph authentication
+- Apply app metadata and detection rules
+- Monitor live operation logs/output during packaging and upload
+
+In short, it turns a multi-step scripting workflow into a guided GUI process while still producing standard PSADT/Intune artifacts.
 
 
 ## Screenshots
