@@ -21,6 +21,9 @@ Build standardized Win32 app packages, generate `.intunewin`, and publish to Int
 Official Microsoft link for Win32 Content Prep Tool:
 - https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool
 
+PSAppDeployToolkit installation reference:
+- https://github.com/PSAppDeployToolkit/PSAppDeployToolkit.Tools
+
 ## Post-Download Unblock Step
 If you downloaded this project as ZIP, unblock scripts once after extraction to avoid repeated PowerShell security prompts:
 
@@ -137,3 +140,4 @@ The Configure panel organizes PSADT functions into practical categories to impro
 
 ### Generate and Upload
 ![Generate and Upload](assets/screenshots/05-generate-upload.png)
+
