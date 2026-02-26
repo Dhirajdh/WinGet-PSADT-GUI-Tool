@@ -77,6 +77,18 @@ function Show-StartupMsg(
     $null = $w.ShowDialog()
 }
 
+# Resolve repository root regardless of host script location (root or src/GUI).
+$script:RepoRoot = $PSScriptRoot
+if ($script:RepoRoot -and ((Split-Path $script:RepoRoot -Leaf) -ieq "GUI")) {
+    $parent = Split-Path $script:RepoRoot -Parent
+    if ((Split-Path $parent -Leaf) -ieq "src") {
+        $script:RepoRoot = Split-Path $parent -Parent
+    }
+}
+if ([string]::IsNullOrWhiteSpace($script:RepoRoot) -or !(Test-Path $script:RepoRoot)) {
+    $script:RepoRoot = (Get-Location).Path
+}
+
 # WPF + PSADT workflow is most reliable in Windows PowerShell (Desktop).
 if ($PSVersionTable.PSEdition -ne "Desktop") {
     Show-StartupMsg -Text (
@@ -84,10 +96,13 @@ if ($PSVersionTable.PSEdition -ne "Desktop") {
         "Host Compatibility",
         [System.Windows.MessageBoxImage]::Information
     )
-    $scriptPath = $PSCommandPath
+    $scriptPath = Join-Path $script:RepoRoot "WinGet-PSADT-GUI.ps1"
+    if (!(Test-Path $scriptPath)) {
+        $scriptPath = $PSCommandPath
+    }
     if ([string]::IsNullOrWhiteSpace($scriptPath)) { $scriptPath = $MyInvocation.MyCommand.Path }
     if ([string]::IsNullOrWhiteSpace($scriptPath) -or !(Test-Path $scriptPath)) {
-        $fallback = Join-Path (Get-Location).Path "WinGet-PSADT GUI Tool.ps1"
+        $fallback = Join-Path (Get-Location).Path "WinGet-PSADT-GUI.ps1"
         if (Test-Path $fallback) { $scriptPath = $fallback }
     }
 
@@ -121,9 +136,12 @@ Clear-Host
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 try { Add-Type -AssemblyName System.Windows.Forms } catch {}
 
-if     ($PSScriptRoot -and $PSScriptRoot -ne '') { $Global:ScriptBase = $PSScriptRoot }
-elseif ($MyInvocation.MyCommand.Path)             { $Global:ScriptBase = Split-Path $MyInvocation.MyCommand.Path -Parent }
-else                                              { $Global:ScriptBase = (Get-Location).Path }
+$Global:ScriptBase = $script:RepoRoot
+if ([string]::IsNullOrWhiteSpace($Global:ScriptBase) -or !(Test-Path $Global:ScriptBase)) {
+    if     ($PSScriptRoot -and $PSScriptRoot -ne '') { $Global:ScriptBase = $PSScriptRoot }
+    elseif ($MyInvocation.MyCommand.Path)             { $Global:ScriptBase = Split-Path $MyInvocation.MyCommand.Path -Parent }
+    else                                              { $Global:ScriptBase = (Get-Location).Path }
+}
 
 $Global:PackageRoot     = Join-Path $Global:ScriptBase "Packages"
 $Global:OutputRoot      = Join-Path $Global:ScriptBase "Output"
@@ -5076,3 +5094,5 @@ Apply-ComboAutoSize -Root $Window -MinChars 8
 $Window.ShowDialog() | Out-Null
 Write-DebugLog "INFO" "MainWindowShowDialogEnd"
 return
+
+

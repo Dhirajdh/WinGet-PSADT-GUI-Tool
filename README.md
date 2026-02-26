@@ -1,155 +1,64 @@
-# WinGet-PSADT GUI Packaging Tool
+# WinGet-PSADT-GUI-Tool
 
-WinGet + PSAppDeployToolkit packaging GUI for IT professionals.  
-Build standardized Win32 app packages, generate `.intunewin`, and publish to Intune with enterprise-safe defaults.
+This workspace contains the modular migration of:
+- `src/GUI/MainHost.ps1` (legacy monolith)
 
-## Features
-- WinGet package search and metadata discovery.
-- PSAppDeployToolkit package scaffolding and script configuration.
-- Function/parameter-driven configure experience by phase.
-- `.intunewin` generation and Intune upload workflows.
-- Detection rule authoring with JSON persistence.
-- Live output and progress visibility for major operations.
+## Migration Status
+The code is split under `src/` using the dependency order:
+- `Core`
+- `Validation`
+- `Packaging`
+- `Intune`
+- `GUI`
 
-## Requirements
-- Windows 10/11
-- Windows PowerShell 5.1 (Desktop)
-- WinGet installed and available in `PATH`
-- PSAppDeployToolkit available on the machine
-- Microsoft Win32 Content Prep Tool (`IntuneWinAppUtil.exe`) manually placed in `Tools/`
+## Extracted Modules
+- `src/Packaging/PSADTTemplate.ps1`
+  - `New-PSADTTemplateSafe`
+  - `Normalize-PSADTTemplateSections`
+- `src/Packaging/ScriptEditor.ps1`
+  - `Get-AppDetailsFromScript`
+  - `Save-AppDetailsToScript`
+  - `Get-SAIWParamsFromScript`
+  - `Save-SAIWParamsToScript`
+- `src/Intune/Upload.ps1`
+  - `Start-IntuneUploadAssistant`
+- `src/GUI/MainWindow.ps1`
+  - `Invoke-DownloadAction`
+  - `Invoke-ConfigureAction`
+  - `Invoke-GenerateAction`
+  - `Invoke-UploadAction`
+- `src/GUI/ConfigureWindow.ps1`
+  - `Show-ConfigureWindow`
+- `src/GUI/AppDetailsWindow.ps1`
+  - `Show-AppDetailsWindow`
 
-Official Microsoft link for Win32 Content Prep Tool:
-- https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool
+## Entry Points
+- Legacy full script:
+  - `src/GUI/MainHost.ps1`
+- Migration bootstrap:
+  - `WinGet-PSADT-GUI.ps1`
 
-PSAppDeployToolkit installation reference:
-- https://github.com/PSAppDeployToolkit/PSAppDeployToolkit.Tools
-
-## Post-Download Security Prompt Handling
-The launcher automatically attempts to unblock repository files on startup.
-
-If your environment still shows script trust prompts (for example, stricter execution policy), run this fallback command once from the repository root:
-
-```powershell
-Get-ChildItem -Recurse -File | Unblock-File
-```
-
-## Quick Start
-Preferred (avoids repeated script trust prompts on ZIP downloads):
-
-```bat
+## Run
+Preferred (auto-unblocks local files first):
+```cmd
 .\Start-WinGetPsadtTool.cmd
 ```
 
-PowerShell entry (advanced/manual):
-
+PowerShell entry:
 ```powershell
-powershell.exe -ExecutionPolicy Bypass -File .\app\Start-WinGetPsadtTool.ps1
+powershell.exe -ExecutionPolicy Bypass -File .\WinGet-PSADT-GUI.ps1
 ```
 
-## Module Usage
-```powershell
-Import-Module .\src\WinGetPsadtTool\WinGetPsadtTool.psd1 -Force
-Start-WGPTGui
-```
+## Prerequisites
+- Windows PowerShell 5.1
+- WinGet
+- PSAppDeployToolkit.Tools: https://github.com/PSAppDeployToolkit/PSAppDeployToolkit.Tools
+- Microsoft Win32 Content Prep Tool: https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool
 
-## Repository Structure
-```text
-.
-|- app/
-|  \- Start-WinGetPsadtTool.ps1
-|- src/WinGetPsadtTool/
-|  |- Public/
-|  |- Private/
-|  |- WinGetPsadtTool.psm1
-|  \- WinGetPsadtTool.psd1
-|- assets/
-|- Templates/
-|- docs/
-|- tests/
-|- Tools/       # local dependency drop path only (not redistributed)
-|- Packages/    # local generated package work area
-|- Output/      # local generated .intunewin output
-\- Logs/        # local runtime logs
-```
+## Notes
+- No organization placeholders remain in README/CHANGELOG.
+- Module files in `src/` parse successfully.
 
-## What Must Not Be Committed
-- `Tools/` binaries (`IntuneWinAppUtil.exe`, DLLs, other executables)
-- `Packages/`, `Output/`, `Logs/`
-- installers and downloaded content
-- `.intunewin`, archives, temp files
-- secrets, keys, certificates
-
-See `.gitignore` and `THIRD_PARTY_NOTICES.md`.
-
-## Open-Source Compliance
-- License: MIT (`LICENSE`)
-- Changelog format: Keep a Changelog (`CHANGELOG.md`)
-- Security reporting: `SECURITY.md`
-- Contribution process: `CONTRIBUTING.md`
-
-## Versioning
-This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
-
-Recommended release flow:
-1. Feature/fix merged to `main`
-2. Update `CHANGELOG.md`
-3. Tag release (`vX.Y.Z`)
-4. Publish GitHub Release notes
-
-## Third-Party Notice
-This repository **does not redistribute** proprietary or third-party binaries/installers.  
-Users must acquire and use those artifacts under their own licenses.
-
-Details: `THIRD_PARTY_NOTICES.md`.
-
-## Prerequisite Placement
-See docs/prerequisites.md for exact folder-by-folder setup before first run.
-
-## Product Overview
-**WinGet-PSADT GUI Packaging Tool** is built for IT professionals who need repeatable, low-friction Win32 app packaging.
-
-It provides a single operational surface for:
-- application discovery from WinGet
-- PSAppDeployToolkit-based packaging
-- configure-by-phase script authoring
-- `.intunewin` generation
-- Intune upload workflows
-
-## PSADT Function Categories in UI
-The Configure panel organizes PSADT functions into practical categories to improve discoverability and reduce scripting errors:
-- User Interface
-- Registry
-- File System
-- Shortcuts
-- Services
-- User Context / Profiles
-- Environment / System
-- Configuration / INI
-- Logging
-- Security / Permissions
-- Application Detection / Management
-- Browser Extensions
-- Process Execution
-- MSI / MSP / MST
-- Core Toolkit Engine
-
-## Screenshots
-> Add screenshots to `assets/screenshots/` using filenames in `assets/screenshots/README.md`.
-
-### Search Results
-![Search Results](assets/screenshots/01-search-results.png)
-
-### Package Information
-![Package Information](assets/screenshots/02-package-info.png)
-
-### Configure Panel
-![Configure Panel](assets/screenshots/03-configure-panel.png)
-
-### PSADT Function Categories
-![PSADT Function Categories](assets/screenshots/04-function-categories.png)
-
-### Generate and Upload
-![Generate and Upload](assets/screenshots/05-generate-upload.png)
 
 
 

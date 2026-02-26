@@ -1,26 +1,19 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)  
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
-### Added
--
-### Changed
--
-### Fixed
--
-### Removed
--
+- Ongoing modularization and extraction cleanup.
 
 ## [1.0.0] - 2026-02-26
 ### Added
-- Open-source repository baseline.
-- Modular folder architecture under `src/WinGetPsadtTool`.
-- Compatibility-first module wrapper preserving existing GUI behavior.
-- Standard OSS governance docs and GitHub templates.
+- Introduced `src/` modular structure with ordered layering:
+  - Core -> Validation -> Packaging -> Intune -> GUI
+- Extracted packaging helpers:
+  - `New-PSADTTemplateSafe`
+  - `Normalize-PSADTTemplateSections`
+  - AppDetails/SAIW read-write functions
+- Extracted Intune upload helper:
+  - `Start-IntuneUploadAssistant`
+- Added GUI action wrappers in `src/GUI/MainWindow.ps1`.
+- Added dedicated GUI modules for Configure/AppDetails.
+- Added migration bootstrap script `WinGet-PSADT-GUI.ps1`.
 
-[Unreleased]: https://github.com/<ORG_OR_USER>/WinGet-PSADT-GUI-Tool/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/<ORG_OR_USER>/WinGet-PSADT-GUI-Tool/releases/tag/v1.0.0
