@@ -12,17 +12,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Parse check module
+      - name: Parse check entrypoint + all src scripts
         shell: pwsh
         run: |
-          $path = Resolve-Path .\src\WinGetPsadtTool\WinGetPsadtTool.psm1
-          $tokens = $null
-          $errors = $null
-          [System.Management.Automation.Language.Parser]::ParseFile($path,[ref]$tokens,[ref]$errors) | Out-Null
-          if ($errors) { $errors | ForEach-Object { throw $_.Message } }
+          $files = @()
+          $files += Resolve-Path .\WinGet-PSADT-GUI.ps1
+          $files += Get-ChildItem -Path .\src -Recurse -Filter *.ps1 | Select-Object -ExpandProperty FullName
+          if (-not $files -or $files.Count -eq 0) { throw "No PowerShell files found to validate." }
 
-      - name: Import module
+          $hadErrors = $false
+          foreach ($f in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($f,[ref]$tokens,[ref]$errors) | Out-Null
+            if ($errors -and $errors.Count -gt 0) {
+              Write-Host "Parse errors in: $f"
+              $errors | ForEach-Object { Write-Host ("  - " + $_.Message) }
+              $hadErrors = $true
+            }
+          }
+          if ($hadErrors) { throw "PowerShell parse validation failed." }
+
+      - name: Validate required project files
         shell: pwsh
         run: |
-          Import-Module .\src\WinGetPsadtTool\WinGetPsadtTool.psd1 -Force
-          Get-Command -Module WinGetPsadtTool | Format-Table -AutoSize
+          $required = @(
+            '.\WinGet-PSADT-GUI.ps1',
+            '.\Start-WinGetPsadtTool.cmd',
+            '.\src\GUI\MainHost.ps1',
+            '.\src\Core\Initialize.ps1'
+          )
+          foreach ($p in $required) {
+            if (-not (Test-Path $p)) { throw "Missing required file: $p" }
+          }
