@@ -49,8 +49,7 @@ PowerShell entry:
 powershell.exe -ExecutionPolicy Bypass -File .\WinGet-PSADT-GUI.ps1
 ```
 
-## Prerequisites
-- Windows PowerShell 5.1
+## Prerequisites`r`n- Windows PowerShell 5.1
 - WinGet
 - PSAppDeployToolkit.Tools: https://github.com/PSAppDeployToolkit/PSAppDeployToolkit.Tools
 - Microsoft Win32 Content Prep Tool: https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool
@@ -58,6 +57,7 @@ powershell.exe -ExecutionPolicy Bypass -File .\WinGet-PSADT-GUI.ps1
 ## Notes
 - No organization placeholders remain in README/CHANGELOG.
 - Module files in `src/` parse successfully.
+
 
 
 
