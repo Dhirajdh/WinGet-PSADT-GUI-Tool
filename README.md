@@ -2,6 +2,23 @@
 
 This repository contains the modularized WinGet + PSADT GUI packaging tool.
 
+
+## Screenshots
+
+### Search Results
+![Search Results](assets/screenshots/01-search-results.png)
+
+### Package Info
+![Package Info](assets/screenshots/02-package-info.png)
+
+### Configure Panel
+![Configure Panel](assets/screenshots/03-configure-panel.png)
+
+### Function Categories
+![Function Categories](assets/screenshots/04-function-categories.png)
+
+### Generate and Upload
+![Generate and Upload](assets/screenshots/05-generate-upload.png)
 ## Architecture
 Source is split under `src/` in dependency order:
 - `Core`
@@ -41,3 +58,4 @@ If template file is not present, the app uses default PSADT template flow.
 ## Notes
 - Core launcher and GUI host scripts parse successfully.
 - Keep `Packages/`, `Output/`, and `Logs/` out of source control.
+
