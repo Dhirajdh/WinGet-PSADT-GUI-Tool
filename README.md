@@ -18,6 +18,16 @@ Build standardized Win32 app packages, generate `.intunewin`, and publish to Int
 - PSAppDeployToolkit available on the machine
 - Microsoft Win32 Content Prep Tool (`IntuneWinAppUtil.exe`) manually placed in `Tools/`
 
+Official Microsoft link for Win32 Content Prep Tool:
+- https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool
+
+## Post-Download Unblock Step
+If you downloaded this project as ZIP, unblock scripts once after extraction to avoid repeated PowerShell security prompts:
+
+```powershell
+Get-ChildItem -Recurse -File | Unblock-File
+```
+
 ## Quick Start
 ```powershell
 powershell.exe -ExecutionPolicy Bypass -File .\app\Start-WinGetPsadtTool.ps1
@@ -81,7 +91,6 @@ Details: `THIRD_PARTY_NOTICES.md`.
 
 ## Prerequisite Placement
 See docs/prerequisites.md for exact folder-by-folder setup before first run.
-
 
 ## Product Overview
 **WinGet-PSADT GUI Packaging Tool** is built for IT professionals who need repeatable, low-friction Win32 app packaging.
