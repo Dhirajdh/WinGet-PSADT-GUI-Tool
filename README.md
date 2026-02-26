@@ -31,10 +31,7 @@ If you downloaded this project as ZIP, unblock scripts once after extraction to 
 Get-ChildItem -Recurse -File | Unblock-File
 ```
 
-## Quick Start
-```powershell
-powershell.exe -ExecutionPolicy Bypass -File .\app\Start-WinGetPsadtTool.ps1
-```
+## Quick Start`r`nPreferred (avoids repeated script trust prompts on ZIP downloads):`r`n```bat`r`n.\\Start-WinGetPsadtTool.cmd`r`n``` `r`n`r`nPowerShell entry (advanced/manual):`r`n```powershell`r`npowershell.exe -ExecutionPolicy Bypass -File .\\app\\Start-WinGetPsadtTool.ps1`r`n```
 
 ## Module Usage
 ```powershell
@@ -140,5 +137,6 @@ The Configure panel organizes PSADT functions into practical categories to impro
 
 ### Generate and Upload
 ![Generate and Upload](assets/screenshots/05-generate-upload.png)
+
 
 
