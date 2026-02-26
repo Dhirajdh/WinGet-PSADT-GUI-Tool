@@ -1,4 +1,4 @@
-# WinGet-PSADT GUI Packaging Tool
+# WinGet-PSADT GUI Tool
 
 WinGet + PSAppDeployToolkit packaging GUI for IT professionals.  
 Build standardized Win32 app packages, generate `.intunewin`, and publish to Intune with enterprise-safe defaults.
