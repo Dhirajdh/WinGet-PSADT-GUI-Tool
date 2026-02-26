@@ -24,14 +24,27 @@ Official Microsoft link for Win32 Content Prep Tool:
 PSAppDeployToolkit installation reference:
 - https://github.com/PSAppDeployToolkit/PSAppDeployToolkit.Tools
 
-## Post-Download Unblock Step
-If you downloaded this project as ZIP, unblock scripts once after extraction to avoid repeated PowerShell security prompts:
+## Post-Download Security Prompt Handling
+The launcher automatically attempts to unblock repository files on startup.
+
+If your environment still shows script trust prompts (for example, stricter execution policy), run this fallback command once from the repository root:
 
 ```powershell
 Get-ChildItem -Recurse -File | Unblock-File
 ```
 
-## Quick Start`r`nPreferred (avoids repeated script trust prompts on ZIP downloads):`r`n```bat`r`n.\\Start-WinGetPsadtTool.cmd`r`n``` `r`n`r`nPowerShell entry (advanced/manual):`r`n```powershell`r`npowershell.exe -ExecutionPolicy Bypass -File .\\app\\Start-WinGetPsadtTool.ps1`r`n```
+## Quick Start
+Preferred (avoids repeated script trust prompts on ZIP downloads):
+
+```bat
+.\Start-WinGetPsadtTool.cmd
+```
+
+PowerShell entry (advanced/manual):
+
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File .\app\Start-WinGetPsadtTool.ps1
+```
 
 ## Module Usage
 ```powershell
