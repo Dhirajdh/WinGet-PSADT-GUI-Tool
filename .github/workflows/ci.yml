@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse check module
+        shell: pwsh
+        run: |
+          $path = Resolve-Path .\src\WinGetPsadtTool\WinGetPsadtTool.psm1
+          $tokens = $null
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile($path,[ref]$tokens,[ref]$errors) | Out-Null
+          if ($errors) { $errors | ForEach-Object { throw $_.Message } }
+
+      - name: Import module
+        shell: pwsh
+        run: |
+          Import-Module .\src\WinGetPsadtTool\WinGetPsadtTool.psd1 -Force
+          Get-Command -Module WinGetPsadtTool | Format-Table -AutoSize

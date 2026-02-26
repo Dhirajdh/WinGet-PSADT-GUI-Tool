@@ -1,0 +1,67 @@
+# Runtime/generated artifacts
+Logs/
+Output/
+Packages/
+*.log
+*.etl
+*.tmp
+*.intunewin
+*.corrupt-backup
+*.bak
+
+# Downloaded installers and package contents
+**/Files/*
+!**/Files/.gitkeep
+**/Output/*
+!**/Output/.gitkeep
+
+# Tools and external binaries (do not redistribute)
+Tools/*.exe
+Tools/*.dll
+Tools/*.msi
+Tools/*.msix
+Tools/*.appx
+Tools/*.msp
+Tools/**/*.exe
+Tools/**/*.dll
+IntuneWinAppUtil.exe
+
+# Archives and compressed artifacts
+*.zip
+*.7z
+*.rar
+
+# IDE / OS
+.vscode/
+.idea/
+*.code-workspace
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Test output
+TestResults/
+coverage/
+*.coverage
+
+# PowerShell local state
+*.ps1xml
+*.clixml
+
+# Secrets / certs
+.env
+.env.*
+*.pfx
+*.cer
+*.key
+secrets.json
+
+# Template payloads are local-only (keep placeholders/docs tracked)
+Templates/PSADT/**
+!Templates/PSADT/.gitkeep
+!Templates/PSADT/README.md
+!Templates/PSADT/Assets/.gitkeep
+!Templates/PSADT/Config/.gitkeep
+!Templates/PSADT/Files/.gitkeep
+!Templates/PSADT/SupportFiles/.gitkeep
+
